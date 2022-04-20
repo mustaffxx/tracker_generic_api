@@ -1,9 +1,5 @@
-import express from "express";
+import app from './app';
 
-const server = express();
-
-server.get("/", (request, response) => {
-  return response.send("Hello!");
-});
-
-export default server;
+app.listen(3000, () => {
+  console.log('Listening at 3000');
+})
