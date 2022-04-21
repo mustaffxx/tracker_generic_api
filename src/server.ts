@@ -1,5 +1,8 @@
-import app from './app';
+import App from './app';
+import Database from './database';
 
-app.listen(3000, () => {
-  console.log('Listening at 3000');
-})
+const database = new Database();
+database.start();
+
+const app = new App();
+app.start();
