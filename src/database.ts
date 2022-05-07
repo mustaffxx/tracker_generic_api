@@ -8,11 +8,12 @@ class Database {
   constructor() {
     this.db_url = process.env.DATABASE_URL || '';
     this.db_name = process.env.DATABASE_NAME || '';
+    // this.connection;
   }
 
   async start(): Promise<void> {
     try {
-      await mongoose.connect(this.db_url);
+      mongoose.connect(this.db_url);
       console.log('Connected to database!');
     } catch {
       console.log('Database error');

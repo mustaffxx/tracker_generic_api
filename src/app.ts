@@ -1,4 +1,5 @@
 import express, { Application } from 'express';
+import cors from 'cors';
 import routes from './routes';
 import 'dotenv/config';
 
@@ -13,6 +14,7 @@ class App {
 
   middlewares(): void {
     this.server.use(express.json());
+    this.server.use(cors());
   }
 
   routes(): void {
