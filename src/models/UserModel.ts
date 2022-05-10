@@ -11,8 +11,6 @@ const schema = new Schema(
   {
     _id: {
       type: String,
-      unique: true,
-      required: true,
     },
     name: {
       type: String,
@@ -30,6 +28,7 @@ const schema = new Schema(
     },
   },
   {
+    _id: false,
     timestamps: true,
   }
 );
