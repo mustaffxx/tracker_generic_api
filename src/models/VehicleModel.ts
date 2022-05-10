@@ -7,7 +7,7 @@ interface ICoordinates {
 
 interface IVehicle extends Document {
   _id: string;
-  fid: string;
+  uid: string;
   vclass: string;
   vmodel: string;
   plate: string;
@@ -21,7 +21,7 @@ const schema = new Schema(
       unique: true,
       required: true,
     },
-    fid: {
+    uid: {
       type: String,
       required: true,
     },
