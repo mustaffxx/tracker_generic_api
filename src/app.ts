@@ -22,7 +22,7 @@ class App {
   }
 
   start(): void {
-    const port: number = parseInt(process.env.PORT || '', 10) || 3000;
+    const port: number = parseInt(process.env.PORT as string, 10) || 3000;
     this.server.listen(port, () => {
       console.log(`Server running at port ${port}`);
     });

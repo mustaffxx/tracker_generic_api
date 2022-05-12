@@ -6,8 +6,8 @@ class Database {
   db_name: string;
 
   constructor() {
-    this.db_url = process.env.DATABASE_URL || '';
-    this.db_name = process.env.DATABASE_NAME || '';
+    this.db_url = process.env.DATABASE_URL as string;
+    this.db_name = process.env.DATABASE_NAME as string;
   }
 
   async start(): Promise<void> {
