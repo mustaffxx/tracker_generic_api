@@ -5,7 +5,6 @@ import jwt from 'jsonwebtoken';
 import 'dotenv/config';
 
 import User from '../models/UserModel';
-import { tokenToString } from 'typescript';
 
 class AuthController {
   async register(req: Request, res: Response): Promise<Response> {
@@ -31,7 +30,6 @@ class AuthController {
 
     try {
       await user.save();
-      user.password = '';
 
       const token: string = jwt.sign(
         { user_id: user._id },
@@ -41,7 +39,10 @@ class AuthController {
         }
       );
 
-      return res.status(201).json({ user, token });
+      user.password = '';
+      res.set('x-access-token', token);
+
+      return res.status(201).json({ user });
     } catch (error) {
       return res.status(500).json({ error });
     }
@@ -58,16 +59,22 @@ class AuthController {
       return res.status(401).json({ error: 'Unauthorized' });
     }
 
-    const token: string = jwt.sign(
-      { user_id: user._id },
-      process.env.TOKEN_KEY as string,
-      {
-        expiresIn: '24h',
-      }
-    );
+    try {
+      const token: string = jwt.sign(
+        { user_id: user._id },
+        process.env.TOKEN_KEY as string,
+        {
+          expiresIn: '24h',
+        }
+      );
 
-    user.password = '';
-    return res.status(200).json({ user, token });
+      user.password = '';
+      res.set('x-access-token', token);
+
+      return res.status(200).json({ user });
+    } catch (error) {
+      return res.status(500).json({ error: 'Token Generation Failed' });
+    }
   }
 }
 
