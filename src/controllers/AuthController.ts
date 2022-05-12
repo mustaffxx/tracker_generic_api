@@ -1,9 +1,10 @@
 import { Request, Response } from 'express';
 import { v4 as uuid } from 'uuid';
+import bcrypt from 'bcrypt';
 import User from '../models/UserModel';
 
-class UserService {
-  async create(req: Request, res: Response): Promise<Response> {
+class AuthController {
+  async register(req: Request, res: Response): Promise<Response> {
     const { name, email, password } = req.body;
 
     if (!name || !email || !password) {
@@ -15,11 +16,13 @@ class UserService {
       return res.status(400).json({ error: 'Email already exists.' });
     }
 
+    const passwordhash = bcrypt.hashSync(password, 10);
+
     const user = new User({
       _id: uuid(),
       name,
       email,
-      password,
+      password: passwordhash,
     });
 
     try {
@@ -32,4 +35,4 @@ class UserService {
   }
 }
 
-export default new UserService();
+export default new AuthController();
