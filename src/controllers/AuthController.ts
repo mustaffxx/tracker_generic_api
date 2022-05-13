@@ -11,7 +11,7 @@ class AuthController {
     const { name, email, password } = req.body;
 
     if (!name || !email || !password) {
-      return res.status(400).json({ error: 'Bad Request Error' });
+      return res.status(400).json({ error: 'Bad Request' });
     }
 
     const query = await User.find({ email: email });
@@ -43,15 +43,15 @@ class AuthController {
       res.set('x-access-token', token);
 
       return res.status(201).json({ user });
-    } catch (error) {
-      return res.status(500).json({ error });
+    } catch {
+      return res.status(500).json({ error: 'Internal Server Error' });
     }
   }
 
   async login(req: Request, res: Response): Promise<Response> {
     const { email, password } = req.body;
     if (!email || !password) {
-      return res.status(400).json({ error: 'Bad Request Error' });
+      return res.status(400).json({ error: 'Bad Request' });
     }
 
     const user = await User.findOne({ email });
@@ -72,9 +72,14 @@ class AuthController {
       res.set('x-access-token', token);
 
       return res.status(200).json({ user });
-    } catch (error) {
+    } catch {
       return res.status(500).json({ error: 'Token Generation Failed' });
     }
+  }
+
+  async edit(req: Request, res: Response): Promise<Response> {
+    return res.status(200).json({ message: 'test ok' });
+    /* todo */
   }
 }
 
