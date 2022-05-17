@@ -1,10 +1,12 @@
 import { Schema, model, Document } from 'mongoose';
+import roles from '../helpers/roles';
 
 interface IUser extends Document {
   _id: string;
   name: string;
   email: string;
   password: string;
+  role: string;
 }
 
 const schema = new Schema(
@@ -24,6 +26,11 @@ const schema = new Schema(
     },
     password: {
       type: String,
+      required: true,
+    },
+    role: {
+      type: String,
+      default: roles.user,
       required: true,
     },
   },
