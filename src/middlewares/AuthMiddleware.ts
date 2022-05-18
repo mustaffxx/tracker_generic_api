@@ -8,7 +8,7 @@ class AuthMiddleware {
     req: Request,
     res: Response,
     next: NextFunction
-  ): Promise<any> {
+  ): Promise<Response | void> {
     const token = req.headers['x-access-token'];
     if (!token) {
       return res.status(400).json({ error: 'Bad Request' });
