@@ -32,7 +32,7 @@ class AuthController {
       await user.save();
 
       const token: string = jwt.sign(
-        { user_id: user._id },
+        { id: user._id, name: user.name, role: user.role },
         process.env.TOKEN_KEY as string,
         {
           expiresIn: '24h',
@@ -61,7 +61,7 @@ class AuthController {
 
     try {
       const token: string = jwt.sign(
-        { user_id: user._id },
+        { id: user._id, name: user.name, role: user.role },
         process.env.TOKEN_KEY as string,
         {
           expiresIn: '24h',

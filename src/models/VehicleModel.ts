@@ -18,8 +18,6 @@ const schema = new Schema(
   {
     _id: {
       type: String,
-      unique: true,
-      required: true,
     },
     uid: {
       type: String,
