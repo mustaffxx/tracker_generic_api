@@ -16,7 +16,7 @@ class AuthController {
 
     const query = await User.find({ email: email });
     if (query && query.length !== 0) {
-      return res.status(409).json({ error: 'Email already exists.' });
+      return res.status(409).json({ error: 'Email already exists' });
     }
 
     const passwordhash = bcrypt.hashSync(password, 10);

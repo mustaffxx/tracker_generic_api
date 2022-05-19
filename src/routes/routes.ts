@@ -10,12 +10,20 @@ const routes = Router();
 routes.post('/register', AuthController.register);
 routes.post('/login', AuthController.login);
 routes.put('/edit', AuthMiddleware.validateToken, AuthController.edit);
+
 routes.get(
   '/users',
   AuthMiddleware.validateToken,
   UserMiddleware.validateAdminRole,
   UserController.getUsers
 );
+routes.post(
+  '/vehicles',
+  AuthMiddleware.validateToken,
+  UserMiddleware.validateAdminRole,
+  UserController.createVehicle
+);
+
 routes.get(
   '/vehicles',
   AuthMiddleware.validateToken,
