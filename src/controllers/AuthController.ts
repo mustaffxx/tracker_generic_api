@@ -77,7 +77,7 @@ class AuthController {
     }
   }
 
-  async edit(req: Request, res: Response): Promise<Response> {
+  async changePassword(req: Request, res: Response): Promise<Response> {
     const { oldpassword, newpassword } = req.body;
     const id = res.locals.id;
 

@@ -9,7 +9,11 @@ const routes = Router();
 
 routes.post('/register', AuthController.register);
 routes.post('/login', AuthController.login);
-routes.put('/edit', AuthMiddleware.validateToken, AuthController.edit);
+routes.put(
+  '/edit',
+  AuthMiddleware.validateToken,
+  AuthController.changePassword
+);
 
 routes.get(
   '/users',
