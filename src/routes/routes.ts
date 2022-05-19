@@ -27,7 +27,7 @@ routes.post(
 routes.get(
   '/vehicles',
   AuthMiddleware.validateToken,
-  UserController.getVehicles
+  UserController.getUserVehicles
 );
 
 export default routes;
