@@ -17,6 +17,12 @@ routes.get(
   UserMiddleware.validateAdminRole,
   UserController.getUsers
 );
+routes.get(
+  '/vehicles',
+  AuthMiddleware.validateToken,
+  UserMiddleware.validateAdminRole,
+  UserController.getVehicles
+);
 routes.post(
   '/vehicles',
   AuthMiddleware.validateToken,

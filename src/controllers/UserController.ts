@@ -12,6 +12,12 @@ class UserController {
     return res.status(200).json({ users });
   }
 
+  async getVehicles(req: Request, res: Response): Promise<Response> {
+    const vehicles = await Vehicle.find({});
+
+    return res.status(200).json({ vehicles });
+  }
+
   async getUserVehicles(req: Request, res: Response): Promise<Response> {
     const { id } = res.locals;
 
