@@ -78,8 +78,30 @@ class AuthController {
   }
 
   async edit(req: Request, res: Response): Promise<Response> {
-    return res.status(200).json({ message: 'test ok' });
-    /* todo */
+    const { oldpassword, newpassword } = req.body;
+    const id = res.locals.id;
+
+    if (!oldpassword || !newpassword || !id) {
+      return res.status(400).json({ error: 'Bad Request' });
+    }
+
+    const user = await User.findOne({ _id: id });
+    if (!user || !bcrypt.compareSync(oldpassword, user.password)) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    try {
+      const passwordhash = bcrypt.hashSync(newpassword, 10);
+      await User.updateOne(
+        { _id: res.locals.id },
+        {
+          password: passwordhash,
+        }
+      );
+      return res.status(200).json({ message: 'Password successfully updated' });
+    } catch {
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
   }
 }
 
