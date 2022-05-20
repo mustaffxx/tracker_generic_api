@@ -21,6 +21,12 @@ routes.get(
   UserMiddleware.validateAdminRole,
   UserController.getUsers
 );
+routes.delete(
+  '/users',
+  AuthMiddleware.validateToken,
+  UserMiddleware.validateAdminRole,
+  UserController.deleteUser
+);
 routes.get(
   '/vehicles',
   AuthMiddleware.validateToken,
