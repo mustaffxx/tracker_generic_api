@@ -5,7 +5,7 @@ import User from '../models/UserModel';
 import Vehicle from '../models/VehicleModel';
 
 class UserController {
-  async getUsers(req: Request, res: Response): Promise<Response> {
+  async getAllUsers(req: Request, res: Response): Promise<Response> {
     const users = await User.find({});
     users.map((user) => {
       user.password = '';
@@ -13,7 +13,7 @@ class UserController {
     return res.status(200).json({ users });
   }
 
-  async updateUser(req: Request, res: Response): Promise<Response> {
+  async updateUserById(req: Request, res: Response): Promise<Response> {
     const { id, nname, nemail, npassword, nrole } = req.body;
     if (!id || !nname || !nemail || !npassword || !nrole) {
       return res.status(400).json({ error: 'Bad Request' });
@@ -47,7 +47,7 @@ class UserController {
     }
   }
 
-  async deleteUser(req: Request, res: Response): Promise<Response> {
+  async deleteUserById(req: Request, res: Response): Promise<Response> {
     const { id } = req.body;
     if (!id) {
       return res.status(400).json({ error: 'Bad Request' });

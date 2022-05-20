@@ -15,26 +15,26 @@ routes.put(
   AuthController.changePassword
 );
 
-// request users <- admin
+// request all users <- admin
 routes.get(
   '/users',
   AuthMiddleware.validateToken,
   UserMiddleware.validateAdminRole,
-  UserController.getUsers
+  UserController.getAllUsers
 );
 // update user <- admin
 routes.put(
   '/users',
   AuthMiddleware.validateToken,
   UserMiddleware.validateAdminRole,
-  UserController.updateUser
+  UserController.updateUserById
 );
 // delete user <- admin
 routes.delete(
   '/users',
   AuthMiddleware.validateToken,
   UserMiddleware.validateAdminRole,
-  UserController.deleteUser
+  UserController.deleteUserById
 );
 // create vehicle <- admin
 routes.post(
