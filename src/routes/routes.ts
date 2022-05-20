@@ -4,6 +4,7 @@ import AuthController from '../controllers/AuthController';
 import AuthMiddleware from '../middlewares/AuthMiddleware';
 import UserController from '../controllers/UserController';
 import UserMiddleware from '../middlewares/UserMiddleware';
+import VehicleController from '../controllers/VehicleController';
 
 const routes = Router();
 
@@ -41,21 +42,21 @@ routes.post(
   '/vehicles',
   AuthMiddleware.validateToken,
   UserMiddleware.validateAdminRole,
-  UserController.createVehicle
+  VehicleController.createVehicle
 );
 // request vehicles <- admin
 routes.get(
   '/vehicles',
   AuthMiddleware.validateToken,
   UserMiddleware.validateAdminRole,
-  UserController.getVehicles
+  VehicleController.getAllVehicles
 );
 
 // request self vehicles <- user
 routes.get(
   '/vehicles',
   AuthMiddleware.validateToken,
-  UserController.getUserVehicles
+  VehicleController.getUserVehicles
 );
 
 export default routes;
