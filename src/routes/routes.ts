@@ -51,6 +51,20 @@ routes.get(
   UserMiddleware.validateAdminRole,
   VehicleController.getAllVehicles
 );
+// update vehicle <- admin
+routes.put(
+  '/vehicles',
+  AuthMiddleware.validateToken,
+  UserMiddleware.validateAdminRole,
+  VehicleController.updateVehicleById
+);
+// delete vehicle <- admin
+// routes.put(
+//   '/vehicles',
+//   AuthMiddleware.validateToken,
+//   UserMiddleware.validateAdminRole,
+//   VehicleController.deleteVehicleById
+// );
 
 // request self vehicles <- user
 routes.get(

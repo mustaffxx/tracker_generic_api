@@ -50,6 +50,39 @@ class VehicleController {
       return res.status(500).json({ error: 'Internal Server Error' });
     }
   }
+
+  async updateVehicleById(req: Request, res: Response): Promise<Response> {
+    const { _id, uid, plate, vclass, vmodel } = req.body;
+    if (!_id || !uid || !plate || !vclass || !vmodel) {
+      return res.status(400).json({ error: 'Bad Request' });
+    }
+
+    const vehicle = await Vehicle.find({ _id });
+    if (!vehicle || vehicle.length === 0) {
+      return res.status(400).json({ error: 'User does not exists' });
+    }
+
+    try {
+      const vehicleUpdated = await Vehicle.findOneAndUpdate(
+        { _id: _id },
+        {
+          uid,
+          plate,
+          vclass,
+          vmodel,
+        },
+        { returnDocument: 'after' }
+      );
+
+      if (vehicleUpdated !== null) {
+        return res.status(200).json({ vehicleUpdated });
+      } else {
+        return res.status(400).json({ error: 'User does not exists' });
+      }
+    } catch {
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+  }
 }
 
 export default new VehicleController();
