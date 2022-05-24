@@ -1,6 +1,8 @@
 import express, { Application } from 'express';
 import cors from 'cors';
-import routes from './routes/routes';
+import auth from './routes/AuthRoute';
+import users from './routes/UserRoute';
+import vehicles from './routes/VehicleRoute';
 import 'dotenv/config';
 
 class App {
@@ -18,7 +20,9 @@ class App {
   }
 
   routes(): void {
-    this.server.use(routes);
+    this.server.use(auth);
+    this.server.use(users);
+    this.server.use(vehicles);
   }
 
   start(): void {
