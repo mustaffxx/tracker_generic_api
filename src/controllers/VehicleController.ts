@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import bcrypt from 'bcrypt';
 import { v4 as uuid } from 'uuid';
 import User from '../models/UserModel';
 import Vehicle from '../models/VehicleModel';
@@ -9,12 +8,6 @@ class VehicleController {
     const { id } = res.locals;
 
     const vehicles = await Vehicle.findOne({ uid: id });
-
-    return res.status(200).json({ vehicles });
-  }
-
-  async getAllVehicles(req: Request, res: Response): Promise<Response> {
-    const vehicles = await Vehicle.find({});
 
     return res.status(200).json({ vehicles });
   }
@@ -49,6 +42,12 @@ class VehicleController {
     } catch {
       return res.status(500).json({ error: 'Internal Server Error' });
     }
+  }
+
+  async getAllVehicles(req: Request, res: Response): Promise<Response> {
+    const vehicles = await Vehicle.find({});
+
+    return res.status(200).json({ vehicles });
   }
 
   async updateVehicleById(req: Request, res: Response): Promise<Response> {

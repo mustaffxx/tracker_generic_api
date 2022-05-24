@@ -37,11 +37,4 @@ routes.delete(
   VehicleController.deleteVehicleById
 );
 
-// request self vehicles <- user
-routes.get(
-  '/vehicles',
-  AuthMiddleware.validateToken,
-  VehicleController.getUserVehicles
-);
-
 export default routes;
