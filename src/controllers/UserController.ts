@@ -21,7 +21,7 @@ class UserController {
 
     const user = await User.find({ _id: id });
     if (!user || user.length === 0) {
-      return res.status(400).json({ error: 'User does not exists' });
+      return res.status(404).json({ error: 'User does not exists' });
     }
 
     try {
@@ -40,7 +40,7 @@ class UserController {
         userUpdated.password = '';
         return res.status(200).json({ userUpdated });
       } else {
-        return res.status(400).json({ error: 'User does not exists' });
+        return res.status(404).json({ error: 'User does not exists' });
       }
     } catch {
       return res.status(500).json({ error: 'Internal Server Error' });
@@ -55,7 +55,7 @@ class UserController {
 
     const user = await User.find({ _id: id });
     if (!user || user.length === 0) {
-      return res.status(400).json({ error: 'User does not exists' });
+      return res.status(404).json({ error: 'User does not exists' });
     }
 
     try {

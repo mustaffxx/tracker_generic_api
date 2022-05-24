@@ -27,7 +27,7 @@ class VehicleController {
 
     const user = await User.find({ _id: uid });
     if (!user || user.length === 0) {
-      return res.status(400).json({ error: 'User does not exists' });
+      return res.status(404).json({ error: 'User does not exists' });
     }
 
     const vehicle = await Vehicle.find({ plate });
@@ -59,7 +59,7 @@ class VehicleController {
 
     const vehicle = await Vehicle.find({ _id });
     if (!vehicle || vehicle.length === 0) {
-      return res.status(400).json({ error: 'Vehicle does not exists' });
+      return res.status(404).json({ error: 'Vehicle does not exists' });
     }
 
     try {
@@ -77,7 +77,7 @@ class VehicleController {
       if (vehicleUpdated !== null) {
         return res.status(200).json({ vehicleUpdated });
       } else {
-        return res.status(400).json({ error: 'Vehicle does not exists' });
+        return res.status(404).json({ error: 'Vehicle does not exists' });
       }
     } catch {
       return res.status(500).json({ error: 'Internal Server Error' });
@@ -92,7 +92,7 @@ class VehicleController {
 
     const vehicle = await Vehicle.find({ _id });
     if (!vehicle || vehicle.length === 0) {
-      return res.status(400).json({ error: 'Vehicle does not exists' });
+      return res.status(404).json({ error: 'Vehicle does not exists' });
     }
 
     try {
