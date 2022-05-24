@@ -59,7 +59,7 @@ class VehicleController {
 
     const vehicle = await Vehicle.find({ _id });
     if (!vehicle || vehicle.length === 0) {
-      return res.status(400).json({ error: 'User does not exists' });
+      return res.status(400).json({ error: 'Vehicle does not exists' });
     }
 
     try {
@@ -77,8 +77,27 @@ class VehicleController {
       if (vehicleUpdated !== null) {
         return res.status(200).json({ vehicleUpdated });
       } else {
-        return res.status(400).json({ error: 'User does not exists' });
+        return res.status(400).json({ error: 'Vehicle does not exists' });
       }
+    } catch {
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+  }
+
+  async deleteVehicleById(req: Request, res: Response): Promise<Response> {
+    const { _id } = req.body;
+    if (!_id) {
+      return res.status(400).json({ error: 'Bad Request' });
+    }
+
+    const vehicle = await Vehicle.find({ _id });
+    if (!vehicle || vehicle.length === 0) {
+      return res.status(400).json({ error: 'Vehicle does not exists' });
+    }
+
+    try {
+      await Vehicle.deleteOne({ _id });
+      return res.status(200).json({ message: 'Vehicle deleted successfully' });
     } catch {
       return res.status(500).json({ error: 'Internal Server Error' });
     }

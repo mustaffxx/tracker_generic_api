@@ -59,12 +59,12 @@ routes.put(
   VehicleController.updateVehicleById
 );
 // delete vehicle <- admin
-// routes.put(
-//   '/vehicles',
-//   AuthMiddleware.validateToken,
-//   UserMiddleware.validateAdminRole,
-//   VehicleController.deleteVehicleById
-// );
+routes.delete(
+  '/vehicles',
+  AuthMiddleware.validateToken,
+  UserMiddleware.validateAdminRole,
+  VehicleController.deleteVehicleById
+);
 
 // request self vehicles <- user
 routes.get(
