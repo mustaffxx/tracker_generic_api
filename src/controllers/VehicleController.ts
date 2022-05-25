@@ -53,10 +53,6 @@ class VehicleController {
   async getVehiclesByUserId(req: Request, res: Response): Promise<Response> {
     const uid = req.params.uid;
 
-    if (!uid) {
-      return res.status(400).json({ error: 'Bad Request' });
-    }
-
     const vehicles = await Vehicle.find({ uid });
 
     return res.status(200).json({ vehicles });
