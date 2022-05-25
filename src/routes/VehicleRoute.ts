@@ -1,8 +1,6 @@
 import { Router } from 'express';
 
-import AuthController from '../controllers/AuthController';
 import AuthMiddleware from '../middlewares/AuthMiddleware';
-import UserController from '../controllers/UserController';
 import UserMiddleware from '../middlewares/UserMiddleware';
 import VehicleController from '../controllers/VehicleController';
 
@@ -21,6 +19,13 @@ routes.get(
   AuthMiddleware.validateToken,
   UserMiddleware.validateAdminRole,
   VehicleController.getAllVehicles
+);
+// request vehicles by user id <- admin
+routes.get(
+  '/vehicles/:uid',
+  AuthMiddleware.validateToken,
+  UserMiddleware.validateAdminRole,
+  VehicleController.getVehiclesByUserId
 );
 // update vehicle <- admin
 routes.put(
