@@ -14,6 +14,13 @@ routes.get(
   UserMiddleware.validateAdminRole,
   UserController.getAllUsers
 );
+// request user by id <- admin
+routes.get(
+  '/users/:id',
+  AuthMiddleware.validateToken,
+  UserMiddleware.validateAdminRole,
+  UserController.getUserById
+);
 // update user <- admin
 routes.put(
   '/users',

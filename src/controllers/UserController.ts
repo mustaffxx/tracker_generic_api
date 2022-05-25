@@ -1,12 +1,20 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
-import { v4 as uuid } from 'uuid';
 import User from '../models/UserModel';
-import Vehicle from '../models/VehicleModel';
 
 class UserController {
   async getAllUsers(req: Request, res: Response): Promise<Response> {
     const users = await User.find({});
+    users.map((user) => {
+      user.password = '';
+    });
+    return res.status(200).json({ users });
+  }
+
+  async getUserById(req: Request, res: Response): Promise<Response> {
+    const _id = req.params.id;
+
+    const users = await User.find({ _id });
     users.map((user) => {
       user.password = '';
     });
