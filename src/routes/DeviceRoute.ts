@@ -34,3 +34,5 @@ routes.delete(
   UserMiddleware.validateAdminRole,
   DeviceController.deleteDevice
 );
+
+export default routes;
