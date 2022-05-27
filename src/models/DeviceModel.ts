@@ -9,7 +9,7 @@ interface IDevice extends Document {
   _id: string;
   uid: string;
   vid: string;
-  did: string;
+  dname: string;
   key: string;
   coordinates: Array<ICoordinates>;
 }
@@ -21,15 +21,18 @@ const schema = new Schema(
     },
     uid: {
       type: String,
+      default: '',
       required: false,
     },
     vid: {
       type: String,
+      default: '',
       required: false,
     },
-    did: {
+    dname: {
       type: String,
-      required: true,
+      default: '',
+      required: false,
     },
     key: {
       type: String,
