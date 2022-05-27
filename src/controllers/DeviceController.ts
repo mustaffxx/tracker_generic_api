@@ -30,7 +30,7 @@ class DeviceController {
   }
 
   async getDevice(req: Request, res: Response): Promise<Response> {
-    const { key } = req.body;
+    const { key } = req.params;
     if (!key) {
       return res.status(400).json({ error: 'Bad Request' });
     }
@@ -72,7 +72,7 @@ class DeviceController {
   }
 
   async deleteDevice(req: Request, res: Response): Promise<Response> {
-    const { _id } = req.body;
+    const { _id } = req.params;
     if (!_id) {
       return res.status(400).json({ error: 'Bad Request' });
     }
@@ -85,3 +85,5 @@ class DeviceController {
     }
   }
 }
+
+export default new DeviceController();

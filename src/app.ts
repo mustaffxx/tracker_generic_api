@@ -3,6 +3,7 @@ import cors from 'cors';
 import auth from './routes/AuthRoute';
 import users from './routes/UserRoute';
 import vehicles from './routes/VehicleRoute';
+import devices from './routes/DeviceRoute';
 import 'dotenv/config';
 
 class App {
@@ -23,6 +24,7 @@ class App {
     this.server.use(auth);
     this.server.use(users);
     this.server.use(vehicles);
+    this.server.use(devices);
   }
 
   start(): void {
