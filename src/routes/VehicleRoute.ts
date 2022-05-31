@@ -6,7 +6,7 @@ import VehicleController from '../controllers/VehicleController';
 
 const routes = Router();
 
-// create vehicle <- admin
+// create vehicle
 routes.post(
   '/vehicles',
   AuthMiddleware.validateToken,

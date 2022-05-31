@@ -88,6 +88,7 @@ class VehicleController {
   async deleteVehicleById(req: Request, res: Response): Promise<Response> {
     // todo
     return res.status(200);
+  }
 }
 
 export default new VehicleController();
