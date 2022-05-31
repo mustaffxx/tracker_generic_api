@@ -1,17 +1,12 @@
 import { Schema, model, Document } from 'mongoose';
 
-interface ICoordinates {
-  lat: string;
-  lng: string;
-}
-
 interface IVehicle extends Document {
   _id: string;
   uid: string;
+  did: string;
   vclass: string;
   vmodel: string;
   plate: string;
-  coordinates: Array<ICoordinates>;
 }
 
 const schema = new Schema(
@@ -23,7 +18,7 @@ const schema = new Schema(
       type: String,
       required: true,
     },
-    plate: {
+    did: {
       type: String,
       required: true,
     },
@@ -35,9 +30,9 @@ const schema = new Schema(
       type: String,
       required: true,
     },
-    coordinates: {
-      type: Array<ICoordinates>(),
-      required: false,
+    plate: {
+      type: String,
+      required: true,
     },
   },
   {
