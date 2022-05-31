@@ -9,8 +9,8 @@ class DeviceController {
       return res.status(400).json({ error: 'Bad Request' });
     }
 
-    const device = Device.findOne({ key });
-    if (device !== null) {
+    const device = await Device.find({ key });
+    if (device.length !== 0) {
       return res.status(409).json({ error: 'Device already exists' });
     }
 
