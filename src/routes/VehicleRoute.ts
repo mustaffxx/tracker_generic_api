@@ -12,32 +12,22 @@ routes.post(
   AuthMiddleware.validateToken,
   VehicleController.createVehicle
 );
-// request vehicles <- admin
+// request vehicles
 routes.get(
   '/vehicles',
   AuthMiddleware.validateToken,
-  UserMiddleware.validateAdminRole,
-  VehicleController.getAllVehicles
+  VehicleController.getVehicles
 );
-// request vehicles by user id <- admin
-routes.get(
-  '/vehicles/:uid',
-  AuthMiddleware.validateToken,
-  UserMiddleware.validateAdminRole,
-  VehicleController.getVehiclesByUserId
-);
-// update vehicle <- admin
+// update vehicle
 routes.put(
   '/vehicles',
   AuthMiddleware.validateToken,
-  UserMiddleware.validateAdminRole,
   VehicleController.updateVehicleById
 );
 // delete vehicle <- admin
 routes.delete(
   '/vehicles',
   AuthMiddleware.validateToken,
-  UserMiddleware.validateAdminRole,
   VehicleController.deleteVehicleById
 );
 

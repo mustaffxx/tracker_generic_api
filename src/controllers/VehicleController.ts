@@ -5,10 +5,17 @@ import Vehicle from '../models/VehicleModel';
 import Device from '../models/DeviceModel';
 
 class VehicleController {
-  async getUserVehicles(req: Request, res: Response): Promise<Response> {
-    const { id } = res.locals;
+  /* Admin role */
+  async getAllVehicles(req: Request, res: Response): Promise<Response> {
+    const vehicles = await Vehicle.find({});
 
-    const vehicles = await Vehicle.findOne({ uid: id });
+    return res.status(200).json({ vehicles });
+  }
+  /* Admin role */
+  async getVehiclesByUserId(req: Request, res: Response): Promise<Response> {
+    const uid = req.params.uid;
+
+    const vehicles = await Vehicle.find({ uid });
 
     return res.status(200).json({ vehicles });
   }
@@ -66,23 +73,39 @@ class VehicleController {
     }
   }
 
-  async getAllVehicles(req: Request, res: Response): Promise<Response> {
-    const vehicles = await Vehicle.find({});
+  async getVehicles(req: Request, res: Response): Promise<Response> {
+    const { id } = res.locals;
 
-    return res.status(200).json({ vehicles });
-  }
-
-  async getVehiclesByUserId(req: Request, res: Response): Promise<Response> {
-    const uid = req.params.uid;
-
-    const vehicles = await Vehicle.find({ uid });
+    const vehicles = await Vehicle.findOne({ uid: id });
 
     return res.status(200).json({ vehicles });
   }
 
   async updateVehicleById(req: Request, res: Response): Promise<Response> {
-    // todo
-    return res.status(200);
+    const { id } = res.locals;
+    const { vid, plate, vclass, vmodel } = req.body;
+    if (!vid || !plate || !vclass || !vmodel) {
+      return res.status(400).json({ error: 'Bad Request' });
+    }
+
+    try {
+      const updatedVehicle = await Vehicle.findOneAndUpdate(
+        { _id: vid, uid: id },
+        {
+          plate: plate,
+          vclass: vclass,
+          vmodel: vmodel,
+        },
+        { returnDocument: 'after' }
+      );
+      if (updatedVehicle) {
+        return res.status(200).json({ updatedVehicle });
+      } else {
+        return res.status(404).json({ error: 'Vehicle does not exists' });
+      }
+    } catch {
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
   }
 
   async deleteVehicleById(req: Request, res: Response): Promise<Response> {
