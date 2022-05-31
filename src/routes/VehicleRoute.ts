@@ -10,7 +10,6 @@ const routes = Router();
 routes.post(
   '/vehicles',
   AuthMiddleware.validateToken,
-  UserMiddleware.validateAdminRole,
   VehicleController.createVehicle
 );
 // request vehicles <- admin

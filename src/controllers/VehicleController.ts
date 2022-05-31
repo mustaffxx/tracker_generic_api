@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { v4 as uuid } from 'uuid';
 import User from '../models/UserModel';
 import Vehicle from '../models/VehicleModel';
+import Device from '../models/DeviceModel';
 
 class VehicleController {
   async getUserVehicles(req: Request, res: Response): Promise<Response> {
@@ -13,8 +14,9 @@ class VehicleController {
   }
 
   async createVehicle(req: Request, res: Response): Promise<Response> {
-    const { uid, plate, vclass, vmodel } = req.body;
-    if (!uid || !plate || !vclass || !vmodel) {
+    const { id: uid } = res.locals;
+    const { did, vclass, vmodel, plate } = req.body;
+    if (!uid || !did || !vclass || !vmodel || !plate) {
       return res.status(400).json({ error: 'Bad Request' });
     }
 
@@ -28,17 +30,37 @@ class VehicleController {
       return res.status(409).json({ error: 'Vehicle already exists' });
     }
 
+    const device = await Device.find({ _id: did });
+    if (device.length === 0) {
+      return res.status(404).json({ error: 'Device does not exists' });
+    }
+
+    device.map((dev) => {
+      if (dev.uid !== '' || dev.vid !== '') {
+        return res.status(409).json({ error: 'Device already registered' });
+      }
+    });
+
     try {
-      const vehi = new Vehicle({
+      const newVehicle = new Vehicle({
         _id: uuid(),
         uid,
-        plate,
+        did,
         vclass,
         vmodel,
-        coordinates: [],
+        plate,
       });
-      await vehi.save();
-      return res.status(200).json({ vehi });
+
+      await Device.updateOne(
+        { _id: did },
+        {
+          uid: uid,
+          vid: newVehicle._id,
+        }
+      );
+
+      await newVehicle.save();
+      return res.status(200).json({ newVehicle });
     } catch {
       return res.status(500).json({ error: 'Internal Server Error' });
     }
@@ -59,56 +81,13 @@ class VehicleController {
   }
 
   async updateVehicleById(req: Request, res: Response): Promise<Response> {
-    const { _id, uid, plate, vclass, vmodel } = req.body;
-    if (!_id || !uid || !plate || !vclass || !vmodel) {
-      return res.status(400).json({ error: 'Bad Request' });
-    }
-
-    const vehicle = await Vehicle.find({ _id });
-    if (!vehicle || vehicle.length === 0) {
-      return res.status(404).json({ error: 'Vehicle does not exists' });
-    }
-
-    try {
-      const vehicleUpdated = await Vehicle.findOneAndUpdate(
-        { _id: _id },
-        {
-          uid,
-          plate,
-          vclass,
-          vmodel,
-        },
-        { returnDocument: 'after' }
-      );
-
-      if (vehicleUpdated !== null) {
-        return res.status(200).json({ vehicleUpdated });
-      } else {
-        return res.status(404).json({ error: 'Vehicle does not exists' });
-      }
-    } catch {
-      return res.status(500).json({ error: 'Internal Server Error' });
-    }
+    // todo
+    return res.status(200);
   }
 
   async deleteVehicleById(req: Request, res: Response): Promise<Response> {
-    const { _id } = req.body;
-    if (!_id) {
-      return res.status(400).json({ error: 'Bad Request' });
-    }
-
-    const vehicle = await Vehicle.find({ _id });
-    if (!vehicle || vehicle.length === 0) {
-      return res.status(404).json({ error: 'Vehicle does not exists' });
-    }
-
-    try {
-      await Vehicle.deleteOne({ _id });
-      return res.status(200).json({ message: 'Vehicle deleted successfully' });
-    } catch {
-      return res.status(500).json({ error: 'Internal Server Error' });
-    }
-  }
+    // todo
+    return res.status(200);
 }
 
 export default new VehicleController();
