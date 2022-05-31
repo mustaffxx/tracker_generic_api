@@ -22,7 +22,6 @@ class DeviceController {
 
     try {
       await newDevice.save();
-      newDevice.key = '';
       return res.status(200).json({ newDevice });
     } catch {
       return res.status(500).json({ error: 'Internal Server Error' });
@@ -30,23 +29,23 @@ class DeviceController {
   }
 
   async getDevice(req: Request, res: Response): Promise<Response> {
-    const { key } = req.params;
-    if (!key) {
+    const { id } = req.params;
+    if (!id) {
       return res.status(400).json({ error: 'Bad Request' });
     }
 
-    const device = Device.findOne({ key });
+    const device = await Device.findOne({ _id: id });
 
     return res.status(200).json({ device });
   }
 
   async updateDevice(req: Request, res: Response): Promise<Response> {
     const { _id, uid, vid, dname } = req.body;
-    if (!_id || !uid || !vid) {
+    if (!_id) {
       return res.status(400).json({ error: 'Bad Request' });
     }
 
-    const device = Device.findOne({ _id });
+    const device = await Device.findOne({ _id });
     if (device === null) {
       return res.status(404).json({ error: 'Device does not exists' });
     }
@@ -72,13 +71,18 @@ class DeviceController {
   }
 
   async deleteDevice(req: Request, res: Response): Promise<Response> {
-    const { _id } = req.params;
-    if (!_id) {
+    const { id } = req.params;
+    if (!id) {
       return res.status(400).json({ error: 'Bad Request' });
     }
 
+    const device = await Device.find({ _id: id });
+    if (device.length === 0) {
+      return res.status(409).json({ error: 'Device does not exists' });
+    }
+
     try {
-      await Device.deleteOne({ _id });
+      await Device.deleteOne({ _id: id });
       return res.status(200).json({ message: 'Device deleted successfully' });
     } catch {
       return res.status(500).json({ error: 'Internal Server Error' });
