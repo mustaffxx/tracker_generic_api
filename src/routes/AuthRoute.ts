@@ -8,7 +8,7 @@ const routes = Router();
 routes.post('/register', AuthController.register);
 routes.post('/login', AuthController.login);
 routes.put(
-  '/edit',
+  '/changepassword',
   AuthMiddleware.validateToken,
   AuthController.changePassword
 );
