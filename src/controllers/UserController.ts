@@ -11,7 +11,7 @@ class UserController {
     return res.status(200).json({ users });
   }
 
-  async getUserById(req: Request, res: Response): Promise<Response> {
+  async getUser(req: Request, res: Response): Promise<Response> {
     const _id = req.params.id;
 
     const users = await User.find({ _id });
@@ -21,7 +21,7 @@ class UserController {
     return res.status(200).json({ users });
   }
 
-  async updateUserById(req: Request, res: Response): Promise<Response> {
+  async updateUser(req: Request, res: Response): Promise<Response> {
     const { id, nname, nemail, npassword, nrole } = req.body;
     if (!id || !nname || !nemail || !npassword || !nrole) {
       return res.status(400).json({ error: 'Bad Request' });
@@ -55,7 +55,7 @@ class UserController {
     }
   }
 
-  async deleteUserById(req: Request, res: Response): Promise<Response> {
+  async deleteUser(req: Request, res: Response): Promise<Response> {
     const { id } = req.body;
     if (!id) {
       return res.status(400).json({ error: 'Bad Request' });

@@ -19,21 +19,21 @@ routes.get(
   '/users/:id',
   AuthMiddleware.validateToken,
   UserMiddleware.validateAdminRole,
-  UserController.getUserById
+  UserController.getUser
 );
 // update user <- admin
 routes.put(
   '/users',
   AuthMiddleware.validateToken,
   UserMiddleware.validateAdminRole,
-  UserController.updateUserById
+  UserController.updateUser
 );
 // delete user <- admin
 routes.delete(
   '/users',
   AuthMiddleware.validateToken,
   UserMiddleware.validateAdminRole,
-  UserController.deleteUserById
+  UserController.deleteUser
 );
 
 export default routes;
