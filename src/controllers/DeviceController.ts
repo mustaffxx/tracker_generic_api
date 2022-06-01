@@ -28,13 +28,8 @@ class DeviceController {
     }
   }
 
-  async getDevice(req: Request, res: Response): Promise<Response> {
-    const { id } = req.body;
-    if (!id) {
-      return res.status(400).json({ error: 'Bad Request' });
-    }
-
-    const device = await Device.findOne({ _id: id });
+  async getDevices(req: Request, res: Response): Promise<Response> {
+    const device = await Device.find({});
 
     return res.status(200).json({ device });
   }

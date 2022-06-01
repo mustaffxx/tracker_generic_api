@@ -18,7 +18,7 @@ routes.get(
   '/devices',
   AuthMiddleware.validateToken,
   UserMiddleware.validateAdminRole,
-  DeviceController.getDevice
+  DeviceController.getDevices
 );
 // update device <- admin
 routes.put(
