@@ -15,7 +15,7 @@ routes.post(
 );
 // request device <- admin
 routes.get(
-  '/devices/:id',
+  '/devices',
   AuthMiddleware.validateToken,
   UserMiddleware.validateAdminRole,
   DeviceController.getDevice
@@ -29,7 +29,7 @@ routes.put(
 );
 // delete device <- admin
 routes.delete(
-  '/devices/:id',
+  '/devices',
   AuthMiddleware.validateToken,
   UserMiddleware.validateAdminRole,
   DeviceController.deleteDevice
