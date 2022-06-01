@@ -32,21 +32,19 @@ class VehicleController {
       return res.status(404).json({ error: 'User does not exists' });
     }
 
-    const vehicle = await Vehicle.find({ plate });
-    if (vehicle && vehicle.length !== 0) {
-      return res.status(409).json({ error: 'Vehicle already exists' });
-    }
-
     const device = await Device.find({ _id: did });
     if (device.length === 0) {
       return res.status(404).json({ error: 'Device does not exists' });
     }
 
-    device.map((dev) => {
+    const deviceRegistered = device.map((dev) => {
       if (dev.uid !== '' || dev.vid !== '') {
-        return res.status(409).json({ error: 'Device already registered' });
+        return dev;
       }
     });
+    if (deviceRegistered.length !== 0) {
+      return res.status(409).json({ error: 'Device already registered' });
+    }
 
     try {
       const newVehicle = new Vehicle({
