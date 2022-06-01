@@ -82,8 +82,12 @@ class DeviceController {
     }
 
     try {
-      await Device.deleteOne({ _id: id });
-      return res.status(200).json({ message: 'Device deleted successfully' });
+      const deviceDeleted = await Device.deleteOne({ _id: id });
+      if (deviceDeleted) {
+        return res.status(200).json({ message: 'Device deleted successfully' });
+      } else {
+        return res.status(500).json({ error: 'Internal Server Error' });
+      }
     } catch {
       return res.status(500).json({ error: 'Internal Server Error' });
     }
