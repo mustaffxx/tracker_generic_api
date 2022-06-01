@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import User from '../models/UserModel';
 
 class UserController {
-  async getAllUsers(req: Request, res: Response): Promise<Response> {
+  async getUsers(req: Request, res: Response): Promise<Response> {
     const users = await User.find({});
     users.map((user) => {
       user.password = '';

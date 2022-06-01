@@ -12,7 +12,7 @@ routes.get(
   '/users',
   AuthMiddleware.validateToken,
   UserMiddleware.validateAdminRole,
-  UserController.getAllUsers
+  UserController.getUsers
 );
 // request user by id <- admin
 routes.get(
