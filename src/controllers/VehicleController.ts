@@ -115,12 +115,12 @@ class VehicleController {
 
     try {
       const deletedVehicle = await Vehicle.deleteOne({ _id: vid, uid: id });
-      if (deletedVehicle) {
+      if (deletedVehicle.deletedCount > 0) {
         return res
           .status(200)
           .json({ message: 'Vehicle deleted successfully' });
       } else {
-        return res.status(500).json({ error: 'Internal Server Error' });
+        return res.status(404).json({ error: 'Vehicle does not exists' });
       }
     } catch {
       return res.status(500).json({ error: 'Internal Server Error' });
