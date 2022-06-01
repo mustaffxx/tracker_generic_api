@@ -109,7 +109,24 @@ class VehicleController {
   }
 
   async deleteVehicleById(req: Request, res: Response): Promise<Response> {
-    // todo
+    const { id } = res.locals;
+    const { vid } = req.body;
+    if (!vid) {
+      return res.status(400).json({ error: 'Bad Request' });
+    }
+
+    try {
+      const deletedVehicle = await Vehicle.deleteOne({ _id: vid, uid: id });
+      if (deletedVehicle) {
+        return res
+          .status(200)
+          .json({ message: 'Vehicle deleted successfully' });
+      } else {
+        return res.status(500).json({ error: 'Internal Server Error' });
+      }
+    } catch {
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
     return res.status(200);
   }
 }

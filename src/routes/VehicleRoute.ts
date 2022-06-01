@@ -24,7 +24,7 @@ routes.put(
   AuthMiddleware.validateToken,
   VehicleController.updateVehicleById
 );
-// delete vehicle <- admin
+// delete vehicle
 routes.delete(
   '/vehicles',
   AuthMiddleware.validateToken,
