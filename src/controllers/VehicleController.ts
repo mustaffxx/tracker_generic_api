@@ -32,17 +32,17 @@ class VehicleController {
       return res.status(404).json({ error: 'User does not exists' });
     }
 
-    const device = await Device.find({ _id: did });
-    if (device.length === 0) {
+    const vehicle = await Vehicle.findOne({ did: did });
+    if (vehicle) {
+      return res.status(409).json({ error: 'Device already registered' });
+    }
+
+    const device = await Device.findOne({ _id: did });
+    if (!device) {
       return res.status(404).json({ error: 'Device does not exists' });
     }
 
-    const deviceRegistered = device.map((dev) => {
-      if (dev.uid !== '' || dev.vid !== '') {
-        return dev;
-      }
-    });
-    if (deviceRegistered.length !== 0) {
+    if (device.uid !== uid && device.uid !== '') {
       return res.status(409).json({ error: 'Device already registered' });
     }
 
@@ -56,6 +56,8 @@ class VehicleController {
         plate,
       });
 
+      await newVehicle.save();
+
       await Device.updateOne(
         { _id: did },
         {
@@ -64,7 +66,6 @@ class VehicleController {
         }
       );
 
-      await newVehicle.save();
       return res.status(200).json({ newVehicle });
     } catch {
       return res.status(500).json({ error: 'Internal Server Error' });
@@ -113,9 +114,15 @@ class VehicleController {
       return res.status(400).json({ error: 'Bad Request' });
     }
 
+    const vehicle = await Vehicle.findOne({ _id: vid, uid: id });
+    if (!vehicle) {
+      return res.status(404).json({ error: 'Vehicle does not exists' });
+    }
+
     try {
       const deletedVehicle = await Vehicle.deleteOne({ _id: vid, uid: id });
       if (deletedVehicle.deletedCount > 0) {
+        await Device.updateOne({ _id: vehicle.did }, { vid: '' });
         return res
           .status(200)
           .json({ message: 'Vehicle deleted successfully' });
