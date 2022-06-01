@@ -1,7 +1,6 @@
 import { Router } from 'express';
 
 import AuthMiddleware from '../middlewares/AuthMiddleware';
-import UserMiddleware from '../middlewares/UserMiddleware';
 import VehicleController from '../controllers/VehicleController';
 
 const routes = Router();
@@ -22,13 +21,13 @@ routes.get(
 routes.put(
   '/vehicles',
   AuthMiddleware.validateToken,
-  VehicleController.updateVehicleById
+  VehicleController.updateVehicle
 );
 // delete vehicle
 routes.delete(
   '/vehicles',
   AuthMiddleware.validateToken,
-  VehicleController.deleteVehicleById
+  VehicleController.deleteVehicle
 );
 
 export default routes;

@@ -80,7 +80,7 @@ class VehicleController {
     return res.status(200).json({ vehicles });
   }
 
-  async updateVehicleById(req: Request, res: Response): Promise<Response> {
+  async updateVehicle(req: Request, res: Response): Promise<Response> {
     const { id } = res.locals;
     const { vid, plate, vclass, vmodel } = req.body;
     if (!vid || !plate || !vclass || !vmodel) {
@@ -107,7 +107,7 @@ class VehicleController {
     }
   }
 
-  async deleteVehicleById(req: Request, res: Response): Promise<Response> {
+  async deleteVehicle(req: Request, res: Response): Promise<Response> {
     const { id } = res.locals;
     const { vid } = req.body;
     if (!vid) {
