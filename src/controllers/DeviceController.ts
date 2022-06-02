@@ -3,6 +3,31 @@ import { v4 as uuid } from 'uuid';
 import Device from '../models/DeviceModel';
 
 class DeviceController {
+  async pushCoordinates(req: Request, res: Response): Promise<Response> {
+    const { key, lat, lng } = req.body;
+    if (!key || !lat || !lng) {
+      return res.status(400).json({ error: 'Bad Request' });
+    }
+
+    try {
+      const device = await Device.findOneAndUpdate(
+        { key: key },
+        {
+          $push: { coordinates: { lat, lng } },
+        },
+        { new: true }
+      );
+
+      if (device !== null) {
+        return res.status(200).json({ message: 'Updated successfully' });
+      } else {
+        return res.status(404).json({ error: 'Device does not exists' });
+      }
+    } catch {
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+  }
+
   async createDevice(req: Request, res: Response): Promise<Response> {
     const { key, dname } = req.body;
     if (!key) {

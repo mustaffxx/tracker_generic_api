@@ -6,6 +6,13 @@ import DeviceController from '../controllers/DeviceController';
 
 const routes = Router();
 
+// populate device coordinates <- device
+routes.post(
+  '/devices/push',
+  AuthMiddleware.validateToken,
+  DeviceController.pushCoordinates
+);
+
 // create device <- admin
 routes.post(
   '/devices',
