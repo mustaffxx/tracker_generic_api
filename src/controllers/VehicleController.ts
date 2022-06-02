@@ -75,8 +75,25 @@ class VehicleController {
   async getVehicles(req: Request, res: Response): Promise<Response> {
     const { id } = res.locals;
 
-    const vehicles = await Vehicle.find({ uid: id });
+    let vehicles = await Vehicle.find({ uid: id });
 
+    await Promise.all(
+      vehicles.map(async (vehicle) => {
+        const device = await Device.findOne({
+          _id: vehicle.did,
+          vid: vehicle._id,
+        });
+        if (device !== null) {
+          device.coordinates.some((obj, i) => {
+            vehicle.coordinates?.push(obj);
+            if (i > 3) {
+              return true;
+            }
+          });
+        }
+        return vehicle;
+      })
+    );
     return res.status(200).json({ vehicles });
   }
 

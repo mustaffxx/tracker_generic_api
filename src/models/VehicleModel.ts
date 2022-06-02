@@ -1,5 +1,10 @@
 import { Schema, model, Document } from 'mongoose';
 
+interface ICoordinates {
+  lat: string;
+  lng: string;
+}
+
 interface IVehicle extends Document {
   _id: string;
   uid: string;
@@ -7,6 +12,7 @@ interface IVehicle extends Document {
   vclass: string;
   vmodel: string;
   plate: string;
+  coordinates?: Array<ICoordinates>;
 }
 
 const schema = new Schema(
@@ -33,6 +39,10 @@ const schema = new Schema(
     plate: {
       type: String,
       required: true,
+    },
+    coordinates: {
+      type: Array<ICoordinates>(),
+      required: false,
     },
   },
   {
