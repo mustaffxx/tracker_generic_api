@@ -1,7 +1,27 @@
 # tracker_generic_api
-API used as reference in an service platform of vehicles tracking.
+
+API used as reference in an service platform of vehicles tracking. </br>
+<small>
+API: _express.js + mongodb_ </br>
+AUTH: _jwt + bcrypt_
+</small>
+
+## Features
+
+- Auth
+- Login/Register routes
+- Access by roles
+  - admin
+    - Users: Request, Update, Delete
+    - Devices: Create, Request, Update, Delete
+    - Vehicles: Create, Request, Update, Delete
+  - user
+    - Vehicles: Create, Request, Update, Delete
+  - device:
+    - Devices: Update.
 
 ## How to use
+
 ```console
 $ git clone https://github.com/mustaffxx/tracker_generic_api
 $ cd tracker_generic_api
