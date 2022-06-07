@@ -1,10 +1,9 @@
 # tracker_generic_api
 
 API used as reference in an service platform of vehicles tracking. </br>
-<sub><sub>
-API: _express.js + mongodb_ </br>
-AUTH: _jwt + bcrypt_
-</sub></sub>
+
+- <code>API: express.js + mongodb</br></code>
+- <code>AUTH: jwt + bcrypt</code>
 
 ## Features
 
