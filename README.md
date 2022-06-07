@@ -2,7 +2,7 @@
 
 API used as reference in an service platform of vehicles tracking. </br>
 
-- <code>API: express.js + mongodb</br></code>
+- <code>API: express + mongoose</br></code>
 - <code>AUTH: jwt + bcrypt</code>
 
 ## Features
