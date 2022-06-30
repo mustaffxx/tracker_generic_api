@@ -17,7 +17,7 @@ class App {
 
   middlewares(): void {
     this.server.use(express.json());
-    this.server.use(cors());
+    this.server.use(cors({ exposedHeaders: 'x-access-token' }));
   }
 
   routes(): void {
